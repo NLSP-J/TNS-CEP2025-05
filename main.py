@@ -175,15 +175,16 @@ async def main():
                 
                 screen.blit(score_text, (win_width // 2 - score_text.get_width() // 2, win_height // 2 - 80))  # Display score
                 screen.blit(winner_text, (win_width // 2 - winner_text.get_width() // 2, win_height // 2))  # Display winner
-                pg.display.flip()  # Update the screen
-                time.sleep(3)  # Wait for 3 seconds to show the score and winner
+                pg.display.update()  # Update the screen
+                time.sleep(2)  # Wait for 3 seconds to show the score and winner
                 running = False  # End the game loop
 
-        pg.display.flip()  # Update the screen with new frame
+        pg.display.update()  # Update the screen with new frame
         clock.tick(60)  # Run the game at 60 FPS
         await asyncio.sleep(0)
 
     pg.quit()  # Quit the game when done
+
 
 
 asyncio.run(main())
