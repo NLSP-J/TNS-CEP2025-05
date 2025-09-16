@@ -155,12 +155,6 @@ async def main():
         screen.blit(background, (0, 0))  # Draw the background first
         screen.blit(player_image, (x1, y1))  # Draw player 1
         screen.blit(player_image2, (x2, y2))  # Draw player 2
-
-        score_text = font.render("", True, black)
-        winner_text = font.render("", True, black)
-
-        screen.blit(score_text, (win_width // 2 - score_text.get_width() // 2, win_height // 2 - 80))  # Display score
-        screen.blit(winner_text, (win_width // 2 - winner_text.get_width() // 2, win_height // 2))  # Display winner
         
         # Draw all killers
         for killer_pos in killers:
@@ -169,21 +163,26 @@ async def main():
         for killer_pos in killers:
             killer_rect = pg.Rect(killer_pos[0], killer_pos[1], 80, 80)  # Killer's rectangle
             if player1_rect.colliderect(killer_rect) or player2_rect.colliderect(killer_rect):
-                # Display the score and end the game
-                score_text = font.render(f"Score: {score1} (Player 1) | {score2} (Player 2)", True, black)
-                winner_text = ""
-                if score1 > score2:
-                    winner_text = font.render("Player 1 Wins!", True, black)
-                elif score2 > score1:
-                    winner_text = font.render("Player 2 Wins!", True, black)
-                else:
-                    winner_text = font.render("It's a Tie!", True, black)
+                game_over = True
+                break
                 
-                # screen.blit(score_text, (win_width // 2 - score_text.get_width() // 2, win_height // 2 - 80))  # Display score
-                # screen.blit(winner_text, (win_width // 2 - winner_text.get_width() // 2, win_height // 2))  # Display winner
-                pg.display.flip()  # Update the screen
-                time.sleep(2)  # Wait for 3 seconds to show the score and winner
-                running = False  # End the game loop
+        if game_over:
+            # Display the score and end the game
+            score_text = font.render(f"Score: {score1} (Player 1) | {score2} (Player 2)", True, black)
+            winner_text = ""
+            if score1 > score2:
+                winner_text = font.render("Player 1 Wins!", True, black)
+            elif score2 > score1:
+                winner_text = font.render("Player 2 Wins!", True, black)
+            else:
+                winner_text = font.render("It's a Tie!", True, black)
+    
+            screen.blit(background, (0, 0))  # Draw the background first
+            screen.blit(score_text, (win_width // 2 - score_text.get_width() // 2, win_height // 2 - 80))  # Display score
+            screen.blit(winner_text, (win_width // 2 - winner_text.get_width() // 2, win_height // 2))  # Display winner
+            pg.display.flip()  # Update the screen
+            time.sleep(2)  # Wait for 3 seconds to show the score and winner
+            running = False  # End the game loop
         
         pg.display.flip()  # Update the screen with new frame
         clock.tick(60)  # Run the game at 60 FPS
@@ -194,6 +193,7 @@ async def main():
 
 
 asyncio.run(main())
+
 
 
 
