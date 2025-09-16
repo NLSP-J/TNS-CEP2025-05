@@ -151,11 +151,6 @@ async def main():
         player1_rect = pg.Rect(x1, y1, 40, 40)  # Player 1's rectangle
         player2_rect = pg.Rect(x2, y2, 40, 40)  # Player 2's rectangle
 
-        # Draw everything
-        screen.blit(background, (0, 0))  # Draw the background first
-        screen.blit(player_image, (x1, y1))  # Draw player 1
-        screen.blit(player_image2, (x2, y2))  # Draw player 2
-
         # Draw all killers
         for killer_pos in killers:
             screen.blit(player_killer, (killer_pos[0], killer_pos[1]))  # Draw each killer
@@ -179,6 +174,11 @@ async def main():
                 time.sleep(2)  # Wait for 3 seconds to show the score and winner
                 running = False  # End the game loop
 
+        # Draw everything
+        screen.blit(background, (0, 0))  # Draw the background first
+        screen.blit(player_image, (x1, y1))  # Draw player 1
+        screen.blit(player_image2, (x2, y2))  # Draw player 2
+        
         pg.display.update()  # Update the screen with new frame
         clock.tick(60)  # Run the game at 60 FPS
         await asyncio.sleep(0)
@@ -188,3 +188,4 @@ async def main():
 
 
 asyncio.run(main())
+
